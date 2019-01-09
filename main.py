@@ -1,9 +1,12 @@
+"Calculates the statistical evidence of emotions based on voice recordings"
+
 import csv
 import argparse
-import os.path
 from pathlib import Path
 
 def main():
+    "main function"
+
     print("Main")
 
     parser = argparse.ArgumentParser(description="Do something lol")
@@ -14,24 +17,22 @@ def main():
 
     if input_file.is_file():
         print("Given path is valid")
-        #tact = []
-        speaking_rate = []
-        avg_pitch = []
-        sound_intensity = []
+        tacts = []
 
 
         with open(input_file) as csvfile:
             reader = csv.reader(csvfile, delimiter=';')
             for row in reader:
-                speaking_rate.append(row[1])
-                avg_pitch.append(row[2])
-                sound_intensity.append(row[3])
-            for el in speaking_rate:
-                print(el)
+                tacts.append({
+                    "id" : row[0],
+                    "speaking_rate" : row[1],
+                    "avg_pitch" : row[2],
+                    "sound_intensity" : row[3]
+                    })
+            for el_tact in tacts:
+                print(el_tact)
     else:
         print("Given path is invalid")
-    
-    
 
 
 if __name__ == "__main__":
