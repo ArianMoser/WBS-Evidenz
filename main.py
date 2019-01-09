@@ -2,20 +2,20 @@
 
 import csv
 import argparse
-import os.path
-from pyds import MassFunction
 from enum import Enum
 from pathlib import Path
+from pyds import MassFunction
+
 class Emotion(Enum):
-     FEAR =0
-     SURPRISE= 1
-     ANGER = 2
-     JOY = 3
-     DISGUST = 4
-     SADNESS = 5
+    FEAR = 0
+    SURPRISE = 1
+    ANGER = 2
+    JOY = 3
+    DISGUST = 4
+    SADNESS = 5
+
 def main():
     "main function"
-
     print("Main")
 
     parser = argparse.ArgumentParser(description="Do something lol")
@@ -43,35 +43,36 @@ def main():
                 omega = {"su", 'f', 'j', 'a', 'sa', 'd'}
                 print(el_tact)
 
-                if float(el_tact["speaking_rate"].replace(",",".")) < 4:
-                    m1 = MassFunction([({'d', 'sa'}, 0.8), (omega, 0.2)])
-                elif(float(el_tact["speaking_rate"].replace(",","."))>= 4 and float(el_tact["speaking_rate"].replace(",",".")) < 5):
-                    m1= MassFunction([(omega, 1)])
-                elif float(el_tact["speaking_rate"].replace(",",".")) >= 5:
-                    m1= MassFunction([({'j', 'f', 's', 'a'}, 0.8), (omega, 0.2)])
+                if float(el_tact["speaking_rate"].replace(",", ".")) < 4:
+                    m_1 = MassFunction([({'d', 'sa'}, 0.8), (omega, 0.2)])
+                elif(float(el_tact["speaking_rate"].replace(",", ".")) >= 4 and
+                     float(el_tact["speaking_rate"].replace(",", ".")) < 5):
+                    m_1 = MassFunction([(omega, 1)])
+                elif float(el_tact["speaking_rate"].replace(",", ".")) >= 5:
+                    m_1 = MassFunction([({'j', 'f', 's', 'a'}, 0.8), (omega, 0.2)])
                 else:
-                    m1 = None
+                    m_1 = None
 
-                if el_tact["avg_pitch"] == "niedrig" or el_tact["avg_pitch"] == "sehr niedrig" :
-                    m2 = MassFunction([({'d','sa'},0.8),(omega,0.2)])
+                if el_tact["avg_pitch"] == "niedrig" or el_tact["avg_pitch"] == "sehr niedrig":
+                    m_2 = MassFunction([({'d', 'sa'}, 0.8), (omega, 0.2)])
                 elif el_tact["avg_pitch"] == "normal":
-                    m2 = MassFunction([(omega,1)])
+                    m_2 = MassFunction([(omega, 1)])
                 elif el_tact["avg_pitch"] == "hoch" or el_tact["avg_pitch"] == "sehr hoch":
-                    m2 = MassFunction([({'j','f','su','a'}, 0.8), (omega, 0.2)])
+                    m_2 = MassFunction([({'j', 'f', 'su', 'a'}, 0.8), (omega, 0.2)])
                 else:
-                    m2 = None
+                    m_2 = None
 
-                if el_tact["sound_intensity"] == "niedrig" or el_tact["sound_intensity"] == "sehr niedrig" :
-                    m3 = MassFunction([({'d','sa'},0.8),(omega,0.2)])
+                if el_tact["sound_intensity"] == "niedrig" or el_tact["sound_intensity"] == "sehr niedrig":
+                    m_3 = MassFunction([({'d', 'sa'}, 0.8), (omega, 0.2)])
                 elif el_tact["sound_intensity"] == "normal":
-                    m3 = MassFunction([({'f'}, 0.6), (omega, 0.4)])
+                    m_3 = MassFunction([({'f'}, 0.6), (omega, 0.4)])
                 elif el_tact["sound_intensity"] == "hoch" or el_tact["sound_intensity"] == "sehr hoch":
-                    m3 = MassFunction([({'j','su','a'}, 0.8), (omega, 0.2)])
+                    m_3 = MassFunction([({'j', 'su', 'a'}, 0.8), (omega, 0.2)])
                 else:
-                    m3 = None
+                    m_3 = None
 
-                m4 = m1.combine_conjunctive([m2, m3], normalization=True)
-                print(m4.max_pl())
+                m_4 = m_1.combine_conjunctive([m_2, m_3], normalization=True)
+                print(m_4.max_pl())
     else:
         print("Given path is invalid")
 
