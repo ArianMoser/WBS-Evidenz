@@ -44,7 +44,7 @@ def main():
                 print(el_tact)
 
                 if float(el_tact["speaking_rate"].replace(",",".")) < 4:
-                    m1 = MassFunction([({'sa', 'd'}, 0.8), (omega, 0.2)])
+                    m1 = MassFunction([({'d', 'sa'}, 0.8), (omega, 0.2)])
                 elif(float(el_tact["speaking_rate"].replace(",","."))>= 4 and float(el_tact["speaking_rate"].replace(",",".")) < 5):
                     m1= MassFunction([(omega, 1)])
                 elif float(el_tact["speaking_rate"].replace(",",".")) >= 5:
@@ -71,7 +71,7 @@ def main():
                     m3 = None
 
                 m4 = m1.combine_conjunctive([m2, m3], normalization=True)
-                print(m4.bel())
+                print(m4.max_pl())
     else:
         print("Given path is invalid")
 
