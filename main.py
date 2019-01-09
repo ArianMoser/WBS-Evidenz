@@ -13,6 +13,22 @@ class Emotion(Enum):
      JOY = 3
      DISGUST = 4
      SADNESS = 5
+
+def emotionToString( s ):
+    if s == "d":
+        return "Ekel"
+    elif s == "f":
+        return "Angst"
+    elif s == "sa":
+        return "Traurigkeit"
+    elif s == "su":
+        return "Ueberraschung"
+    elif s == "a":
+        return "Wut"
+    elif s == "j":
+        return "Freude"
+    else:
+        return "ND"
 def main():
     "main function"
 
@@ -71,9 +87,10 @@ def main():
                     m3 = None
 
                 m4 = m1.combine_conjunctive([m2, m3], normalization=True)
-                print(m4.max_pl())
+                print("Die plausibelste Emotion ist " + emotionToString(str(m4.max_pl())[12:-3]))
     else:
         print("Given path is invalid")
+
 
 
 if __name__ == "__main__":
