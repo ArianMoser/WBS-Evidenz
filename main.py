@@ -86,8 +86,14 @@ def main():
                 else:
                     m_3 = None
 
-                m_4 = m_1.combine_conjunctive([m_2, m_3], normalization=True)
-                print("Die plausibelste Emotion ist " + emotionToString(str(m_4.max_pl())[12:-3]))
+            #    m_4 = m_1.combine_conjunctive([m_2, m_3], normalization=True)
+                m_5 = m_1.combine_conjunctive(m_2,normalization=True)
+                m_4 = m_5.combine_conjunctive(m_3,normalization=True)
+
+                emotion = str(m_4.max_pl())[12:-3]
+                print(m_4)
+                print("Die plausibelste Emotion ist " + emotionToString(emotion)+": " + str(m_4.pl({emotion})))
+
     else:
         print("Given path is invalid")
 
