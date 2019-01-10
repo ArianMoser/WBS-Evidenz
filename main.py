@@ -2,17 +2,8 @@
 
 import csv
 import argparse
-from enum import Enum
 from pathlib import Path
 from pyds import MassFunction
-
-class Emotion(Enum):
-    FEAR = 0
-    SURPRISE = 1
-    ANGER = 2
-    JOY = 3
-    DISGUST = 4
-    SADNESS = 5
 
 def emotionToString( s ):
     if s == "d":
@@ -85,11 +76,7 @@ def main():
                     m_3 = MassFunction([({'j', 'su', 'a'}, 0.8), (omega, 0.2)])
                 else:
                     m_3 = None
-
-            #    m_4 = m_1.combine_conjunctive([m_2, m_3], normalization=True)
-                m_5 = m_1.combine_conjunctive(m_2,normalization=True)
-                m_4 = m_5.combine_conjunctive(m_3,normalization=True)
-
+                m_4 = m_1.combine_conjunctive([m_2,m_3],normalization=True)
                 emotion = str(m_4.max_pl())[12:-3]
                 print(m_4)
                 print("Die plausibelste Emotion ist " + emotionToString(emotion)+": " + str(m_4.pl({emotion})))
