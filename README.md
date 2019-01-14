@@ -1,13 +1,16 @@
 ---
-title: Dokumentation des Programmentwurfs
-subtitle: Erkennung einer Emotion anhand von Sprache
+title: Dokumentation des Programmentwurfs 
 author: Niklas Jaeger, Arian Moser
 header:
   - left: Wissensbasierte Systeme
   - center: Evidenztheorie / Dempster Regel
   - right: 14.01.2019
 footer: yes
+titlepage: yes
 ---
+
+# Erkennung einer Emotion anhand von Sprache
+
 
 ## Aufgabenstellung
 
@@ -111,9 +114,9 @@ festgesetzt werden.
 |                       | Pl({O})=0.1           | Pl({O})=0.1  | Pl({O})=0.1  |
 |                       |                       |              |              |
 
-\newpage
 
-##### Legende:
+##### Legende:  
+
 
 | Buchstabe | Emotion |
 |---:|:---|
@@ -124,6 +127,7 @@ festgesetzt werden.
 | F  | Angst| 
 | A  | Wut| 
 | O  | Omega| 
+
 ---
 
 ### Umsetzung
@@ -147,7 +151,7 @@ Abschließend wird noch die plausibelste Emotion ausgewählt (durch die Funktion
 
 ### Zusätzlich
 
-[Github](https://github.com/ArianMoser/WBS-Evidenz)
+Github: [ArianMoser/WBS-Evidenz](https://github.com/ArianMoser/WBS-Evidenz)
 
 
 
