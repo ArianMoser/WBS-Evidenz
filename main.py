@@ -5,10 +5,9 @@ import argparse
 from pathlib import Path
 from pyds import MassFunction
 
-
 def emotionToString(s):
     """(String) -> String
-    Translates shortened string into the right emotion"""
+    Translates shortened string into the right emotion for output"""
 
     if s == "d":
         return "Ekel"
@@ -58,8 +57,10 @@ def main():
                     })
             # iterates over each tact
             for el_tact in tacts:
+            # define omega (set of all emotions)
                 omega = {"su", 'f', 'j', 'a', 'sa', 'd'}
                 print(el_tact)
+            # determine evidence on the basis of the speaking rate
                 if float(el_tact["speaking_rate"].replace(",", ".")) < 3:
                     m_1 = MassFunction([({'d'}, 0.5),({'j'}, 0.4), (omega, 0.1)])
                 elif float(el_tact["speaking_rate"].replace(",", ".")) < 4:
@@ -73,8 +74,9 @@ def main():
                 elif float(el_tact["speaking_rate"].replace(",", ".")) >= 6:
                     m_1 = MassFunction([({'j', 'f', 'su', 'a'}, 0.9), (omega, 0.1)])
                 else:
+                    #null if nothing is matched
                     m_1 = None
-
+            # determine evidence on the basis of the average pitch
                 if el_tact["avg_pitch"] == "sehr niedrig":
                     m_2 = MassFunction([({'d'}, 0.5),({'sa'}, 0.35), (omega, 0.15)])
                 elif el_tact["avg_pitch"] == "niedrig" :
@@ -86,7 +88,9 @@ def main():
                 elif el_tact["avg_pitch"] == "sehr hoch":
                     m_2 = MassFunction([({'j', 'f', 'su', 'a'}, 0.9), (omega, 0.1)])
                 else:
+                    # null if nothing is matched
                     m_2 = None
+                # determine evidence on the basis of the sound intensity
                 if  el_tact["sound_intensity"] == "sehr niedrig":
                     m_3 = MassFunction([({'d', 'sa'}, 0.9), (omega, 0.1)])
                 elif el_tact["sound_intensity"] == "niedrig" :
@@ -98,10 +102,15 @@ def main():
                 elif el_tact["sound_intensity"] == "sehr hoch":
                     m_3 = MassFunction([({'j', 'su', 'a'}, 0.9), (omega, 0.1)])
                 else:
+                    # null if nothing is matched
                     m_3 = None
+                # combination of m_1 and m_2 and the result with m_3
                 m_4 = m_1.combine_conjunctive([m_2,m_3],normalization=True)
+                # extract emotion identifier (eg. 'a')
                 emotion = str(m_4.max_pl())[12:-3]
+                #print resulting evidence
                 print(m_4)
+                #print most plausible emotion and its value
                 print("Die plausibelste Emotion ist " + emotionToString(emotion)+": " + str(round(m_4.pl({emotion}), 3)))
     else:
         print("Given path is invalid")
