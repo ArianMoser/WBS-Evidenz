@@ -88,25 +88,22 @@ festgesetzt werden.
 |                       |                       |              |              | 
 | normal                | Pl({O})=1.0           | Pl({O})=1.0  | Pl({O})=1.0  |
 |                       |                       |              |              |
-|                       |                       |              |              |
-|                       |                       |              |              | 
 | hoch                  | Pl({J,F,Su,A})=0.8    | Pl({J,F,Su,A})=0.8| Pl({J,Su,a})=0.8   |
 |                       | Pl({O})=0.2           | Pl({O})=0.2  | Pl({O})=0.2   |
 |                       |                       |              |              |
-|                       |                       |              |              | 
 | sehr hoch             | Pl({J,F,Su,A})=0.9    | Pl({J,F,Su,A})=0.9| Pl({J,Su,a})=0.9 |
 |                       | Pl({O})=0.1           | Pl({O})=0.1  | Pl({O})=0.1  |
 |                       |                       |              |              |
 
 ##### Legende:
 
-D  -> Ekel
-J  -> Freude
-Sa -> Traurigkeit
-Su -> Überraschung
-F  -> Angst
-A  -> Wut
-O  -> Omega
+- D  -> Ekel
+- J  -> Freude
+- Sa -> Traurigkeit
+- Su -> Überraschung
+- F  -> Angst
+- A  -> Wut
+- O  -> Omega
 
 
 ### Umsetzung
