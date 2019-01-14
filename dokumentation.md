@@ -11,7 +11,7 @@ titlepage: yes
 
 # Dokumentation des Programmentwurfs: Erkennung einer Emotion anhand von Sprache
 
-## Beschreibung
+## Aufgabenstellung
 
 ### Einzusetzende Methode: 
 Evidenztheorie / Dempster Regel
@@ -22,7 +22,7 @@ Evidenztheorie / Dempster Regel
 
 ### Gegebene Features
 - Sprechgeschwindigkeit (langsamer, normal, schneller)
-- durchschnittliche Tonlage (niediger, normal, höher)
+- durchschnittliche Tonlage (niedriger, normal, höher)
 - Schallstärke/Intensität (schwächer, normal, stärker)
 
 ### Mögliche Emotionen
@@ -53,6 +53,64 @@ Evidenztheorie / Dempster Regel
 
 ## Vorgehensweise
 
+### Analyse
+
+Bei der Analyse der gegebenen Informationen fällt auf, dass die
+Sprechgeschwindigkeit anstatt in Abstufungen (langsam, mittel, schnell) in
+Silben pro Sekunde angegeben ist. Deshalb muss zunächst definiert werden, für
+welche Intervalle welche Abstufung zu wählen ist:
+
+- Sehr Langsam  X < 3 
+- Langsam       3 <= X < 4
+- Normal        4 <= X < 5
+- Schnell       5 <= X < 6
+- Sehr Schnell  X >= 6
+
+Da bei den bereitgestellten Daten von den anderen Attributen direkt die
+Abstufungen angegeben sind, muss hier keine Einteilung mehr vorgenommen werden.
+
+Im nächsten Schritt geht es an die Ermittlung des Basismaß. Dafür muss für jede
+Kategorie für jede Abstufung ein Plausibilitätswert im Bezug auf die Emotionen
+festgesetzt werden.
+
+| Abstufung \ Kategorie | Sprechgeschwindigkeit | Tonlage      | Schallstärke |
+| ---------------------:|:---------------------:|:------------:|:------------:|
+| sehr niedrig          | Pl({D})=0.5           | Pl({})=0.1   | Pl({})=0.1   |
+|                       | Pl({J})=0.4           | Pl({})=0.1   | Pl({})=0.1   |
+|                       | Pl({})=0.1            | Pl({})=0.1   | Pl({})=0.1   |
+| niedrig               | Pl({D})=0.5           | Pl({})=0.1   | Pl({})=0.1   |
+|                       | Pl({})=0.1            | Pl({})=0.1   | Pl({})=0.1   |
+|                       | Pl({})=0.1            | Pl({})=0.1   | Pl({})=0.1   |
+| normal                | Pl({D})=0.5           | Pl({})=0.1   | Pl({})=0.1   |
+|                       | Pl({})=0.1            | Pl({})=0.1   | Pl({})=0.1   |
+|                       | Pl({})=0.1            | Pl({})=0.1   | Pl({})=0.1   |
+| hoch                  | Pl({D})=0.5           | Pl({})=0.1   | Pl({})=0.1   |
+|                       | Pl({})=0.1            | Pl({})=0.1   | Pl({})=0.1   |
+|                       | Pl({})=0.1            | Pl({})=0.1   | Pl({})=0.1   |
+| sehr hoch             | Pl({D})=0.5           | Pl({})=0.1   | Pl({})=0.1   |
+|                       | Pl({})=0.1            | Pl({})=0.1   | Pl({})=0.1   |
+|                       | Pl({})=0.1            | Pl({})=0.1   | Pl({})=0.1   |
+
+Legende:
+
+D -> Ekel
+
+
+### Umsetzung
+
+Im ersten Schritt der Implementierung geht es an das Einlesen der CSV-Datei und
+der sinnvollen Speicherung der darin enthalten Daten. Für das Einlesen wurde
+auf die Bibliothek *csv* zurückgegriffen. Diese kann CSV-Dateien öffnen und
+anhand eines Delimiters deren Daten trennen. Danach müssen die Daten noch
+sinnvoll gespeichert werden. Dafür benutzen wir übersichthalber ein
+Dictionary-Array, indem jede Zeile einen Takt darstellt. Nach der Eingabe
+müssen die Daten noch verarbeitet werden. Dabei werden die einzelnen
+Abstufungen anhand der obrigen Tabelle in die jeweiligen Evidenzen m1, m2 und
+m3 überführt (durch die "MassFunction" aus der Biblothek *pyds*). Im Anschluss
+müssen die Evidenzen noch akkumuliert werden. Dies geschieht durch die Funktion
+"combine\_conjunctive", welche auch von der Bibliothek *pyds* mitgeliefert
+wird. Abschließend wird noch die plausibelste Emotion ausgewählt (durch die
+Funktion "max\_pl" von *pyds*) und der dazugehörige Wert bestimmt.
 
 
 
