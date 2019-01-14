@@ -5,7 +5,11 @@ import argparse
 from pathlib import Path
 from pyds import MassFunction
 
+
 def emotionToString( s ):
+    "(String) -> String"
+    "Translates shortened string into the right emotion"
+
     if s == "d":
         return "Ekel"
     elif s == "f":
@@ -20,24 +24,31 @@ def emotionToString( s ):
         return "Freude"
     else:
         return "ND"
+
+
 def main():
+    "() -> "
     "main function"
+
     print("Main")
 
+    "parses given arguments"
     parser = argparse.ArgumentParser(description="Do something lol")
     parser.add_argument("input", help="input file")
     args = parser.parse_args()
     print("Given argument:", args.input)
     input_file = Path(args.input)
 
+    " checks if given parameter is a valid path"
     if input_file.is_file():
         print("Given path is valid")
         tacts = []
 
-
+        " opens given file"
         with open(input_file) as csvfile:
             reader = csv.reader(csvfile, delimiter=';')
             next(reader, None)
+            "for each row of the file add a tact to the tacts array"
             for row in reader:
                 tacts.append({
                     "id" : row[0],
@@ -45,6 +56,7 @@ def main():
                     "avg_pitch" : row[2],
                     "sound_intensity" : row[3]
                     })
+            "iterates over each tact"
             for el_tact in tacts:
                 omega = {"su", 'f', 'j', 'a', 'sa', 'd'}
                 print(el_tact)
