@@ -17,7 +17,7 @@ titlepage: yes
 Evidenztheorie / Dempster Regel
 
 ### Gegebene Informationen: 
-- CSV Datei mit struktuierten Daten
+- CSV Datei mit strukturierten Daten
 - Liste von Sprechdaten taktweise
 
 ### Gegebene Features
@@ -42,6 +42,8 @@ Evidenztheorie / Dempster Regel
 #### Tonlage
 - Tief:
     - Ekel, Traurigkeit
+- Hoch:
+    - Angst, Überraschung, Wut, Freude
 #### Schallstärke (Intensität)
 - Schwach
     - Traurigkeit, Ekel
@@ -69,31 +71,42 @@ welche Intervalle welche Abstufung zu wählen ist:
 Da bei den bereitgestellten Daten von den anderen Attributen direkt die
 Abstufungen angegeben sind, muss hier keine Einteilung mehr vorgenommen werden.
 
+
 Im nächsten Schritt geht es an die Ermittlung des Basismaß. Dafür muss für jede
-Kategorie für jede Abstufung ein Plausibilitätswert im Bezug auf die Emotionen
+Kategorie in jeder Abstufung ein Plausibilitätswert im Bezug auf die Emotionen
 festgesetzt werden.
 
 | Abstufung \ Kategorie | Sprechgeschwindigkeit | Tonlage      | Schallstärke |
-| ---------------------:|:---------------------:|:------------:|:------------:|
-| sehr niedrig          | Pl({D})=0.5           | Pl({})=0.1   | Pl({})=0.1   |
-|                       | Pl({J})=0.4           | Pl({})=0.1   | Pl({})=0.1   |
-|                       | Pl({})=0.1            | Pl({})=0.1   | Pl({})=0.1   |
-| niedrig               | Pl({D})=0.5           | Pl({})=0.1   | Pl({})=0.1   |
-|                       | Pl({})=0.1            | Pl({})=0.1   | Pl({})=0.1   |
-|                       | Pl({})=0.1            | Pl({})=0.1   | Pl({})=0.1   |
-| normal                | Pl({D})=0.5           | Pl({})=0.1   | Pl({})=0.1   |
-|                       | Pl({})=0.1            | Pl({})=0.1   | Pl({})=0.1   |
-|                       | Pl({})=0.1            | Pl({})=0.1   | Pl({})=0.1   |
-| hoch                  | Pl({D})=0.5           | Pl({})=0.1   | Pl({})=0.1   |
-|                       | Pl({})=0.1            | Pl({})=0.1   | Pl({})=0.1   |
-|                       | Pl({})=0.1            | Pl({})=0.1   | Pl({})=0.1   |
-| sehr hoch             | Pl({D})=0.5           | Pl({})=0.1   | Pl({})=0.1   |
-|                       | Pl({})=0.1            | Pl({})=0.1   | Pl({})=0.1   |
-|                       | Pl({})=0.1            | Pl({})=0.1   | Pl({})=0.1   |
+| ---:|:---:|:---:|:---:|
+| sehr niedrig          | Pl({D})=0.5           | Pl({D})=0.5  | Pl({D,Sa})=0.9   |
+|                       | Pl({J})=0.4           | Pl({Sa})=0.35| Pl({O})=0.1   |
+|                       | Pl({O})=0.1           | Pl({O})=0.15 |              |
+|                       |                       |              |              | 
+| niedrig               | Pl({D})=0.4           | Pl({D})=0.45 | Pl({D,Sa})=0.8   |
+|                       | Pl({J})=0.35          | Pl({Sa})=0.3 | Pl({O})=0.2  |
+|                       | Pl({O})=0.25          | Pl({O})=0.25 |              |
+|                       |                       |              |              | 
+| normal                | Pl({O})=1.0           | Pl({O})=1.0  | Pl({O})=1.0  |
+|                       |                       |              |              |
+|                       |                       |              |              |
+|                       |                       |              |              | 
+| hoch                  | Pl({J,F,Su,A})=0.8    | Pl({J,F,Su,A})=0.8| Pl({J,Su,a})=0.8   |
+|                       | Pl({O})=0.2           | Pl({O})=0.2  | Pl({O})=0.2   |
+|                       |                       |              |              |
+|                       |                       |              |              | 
+| sehr hoch             | Pl({J,F,Su,A})=0.9    | Pl({J,F,Su,A})=0.9| Pl({J,Su,a})=0.9 |
+|                       | Pl({O})=0.1           | Pl({O})=0.1  | Pl({O})=0.1  |
+|                       |                       |              |              |
 
-Legende:
+##### Legende:
 
-D -> Ekel
+D  -> Ekel
+J  -> Freude
+Sa -> Traurigkeit
+Su -> Überraschung
+F  -> Angst
+A  -> Wut
+O  -> Omega
 
 
 ### Umsetzung
@@ -102,7 +115,7 @@ Im ersten Schritt der Implementierung geht es an das Einlesen der CSV-Datei und
 der sinnvollen Speicherung der darin enthalten Daten. Für das Einlesen wurde
 auf die Bibliothek *csv* zurückgegriffen. Diese kann CSV-Dateien öffnen und
 anhand eines Delimiters deren Daten trennen. Danach müssen die Daten noch
-sinnvoll gespeichert werden. Dafür benutzen wir übersichthalber ein
+sinnvoll gespeichert werden. Dafür benutzen wir übersichtshalber ein
 Dictionary-Array, indem jede Zeile einen Takt darstellt. Nach der Eingabe
 müssen die Daten noch verarbeitet werden. Dabei werden die einzelnen
 Abstufungen anhand der obrigen Tabelle in die jeweiligen Evidenzen m1, m2 und
