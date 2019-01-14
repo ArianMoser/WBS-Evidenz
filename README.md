@@ -149,9 +149,21 @@ Abschließend wird noch die plausibelste Emotion ausgewählt (durch die Funktion
 
 ---
 
-### Zusätzlich
 
-Github: [ArianMoser/WBS-Evidenz](https://github.com/ArianMoser/WBS-Evidenz)
+## Zusätzlich
+
+### Ausführen
+
+``` python main.py data.csv```
+
+
+### Voraussetzung
+
+- Python 3.5 oder höher
+
+\vfill
+
+\centering Github: [ArianMoser/WBS-Evidenz](https://github.com/ArianMoser/WBS-Evidenz)
 
 
 
