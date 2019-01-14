@@ -1,4 +1,4 @@
-"Calculates the statistical evidence of emotions based on voice recordings"
+"""Calculates the statistical evidence of emotions based on voice recordings"""
 
 import csv
 import argparse
@@ -6,9 +6,9 @@ from pathlib import Path
 from pyds import MassFunction
 
 
-def emotionToString( s ):
-    "(String) -> String"
-    "Translates shortened string into the right emotion"
+def emotionToString(s):
+    """(String) -> String
+    Translates shortened string into the right emotion"""
 
     if s == "d":
         return "Ekel"
@@ -27,28 +27,28 @@ def emotionToString( s ):
 
 
 def main():
-    "() -> "
-    "main function"
+    """() -> 
+    main function"""
 
     print("Main")
 
-    "parses given arguments"
+    # parses given arguments
     parser = argparse.ArgumentParser(description="Do something lol")
     parser.add_argument("input", help="input file")
     args = parser.parse_args()
     print("Given argument:", args.input)
     input_file = Path(args.input)
 
-    " checks if given parameter is a valid path"
+    # checks if given parameter is a valid path
     if input_file.is_file():
         print("Given path is valid")
         tacts = []
 
-        " opens given file"
+        # opens given file
         with open(input_file) as csvfile:
             reader = csv.reader(csvfile, delimiter=';')
             next(reader, None)
-            "for each row of the file add a tact to the tacts array"
+            # for each row of the file add a tact to the tacts array
             for row in reader:
                 tacts.append({
                     "id" : row[0],
@@ -56,7 +56,7 @@ def main():
                     "avg_pitch" : row[2],
                     "sound_intensity" : row[3]
                     })
-            "iterates over each tact"
+            # iterates over each tact
             for el_tact in tacts:
                 omega = {"su", 'f', 'j', 'a', 'sa', 'd'}
                 print(el_tact)
@@ -88,10 +88,10 @@ def main():
                     m_3 = MassFunction([({'j', 'su', 'a'}, 0.8), (omega, 0.2)])
                 else:
                     m_3 = None
-                m_4 = m_1.combine_conjunctive([m_2,m_3],normalization=True)
+                m_4 = m_1.combine_conjunctive([m_2, m_3], normalization=True)
                 emotion = str(m_4.max_pl())[12:-3]
                 print(m_4)
-                print("Die plausibelste Emotion ist " + emotionToString(emotion)+": " + str(m_4.pl({emotion})))
+                print("Die plausibelste Emotion ist " + emotionToString(emotion) + ": " + str(m_4.pl({emotion})))
 
     else:
         print("Given path is invalid")
